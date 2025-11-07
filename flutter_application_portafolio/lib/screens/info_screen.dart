@@ -51,9 +51,10 @@ class _info_screenState extends State<info_screen> {
         title: Text('Acerca del Desarrollador'),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.purple,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: const Color(0xFF9C27B0), // Color púrpura
+        selectedItemColor: Colors.white, // Color blanco
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
@@ -121,7 +122,10 @@ class _info_screenState extends State<info_screen> {
                   onTap: () {
                     Navigator.pushNamed(context, '/videojuegos');
                   },
-                  leading: const Icon(Icons.videogame_asset, color: Colors.redAccent),
+                  leading: const Icon(
+                    Icons.videogame_asset,
+                    color: Colors.redAccent,
+                  ),
                   title: const Text('VideoJuegos Favoritos'),
                   subtitle: const Text(
                     'The Last of Us, God of war 3, Final Fantasy 7',
