@@ -1,0 +1,15 @@
+// Lista de opciones (se muestra como ListTiles)
+          ...options.map((opt) {final options = AppRoutes.menuOptions;
+            return Column(
+              children: [
+                ListTile(
+                  leading: Icon(opt.icon),
+                  title: Text(opt.title),
+                  onTap: () {
+                    Navigator.pushNamed(context, opt.route);
+                  },
+                ),
+                const Divider(),
+              ],
+            );
+          }).toList(),

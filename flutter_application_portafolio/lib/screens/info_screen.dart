@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class info_screen extends StatelessWidget {
+class info_screen extends StatefulWidget {
   const info_screen({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<info_screen> createState() => _info_screenState();
+}
+
+class _info_screenState extends State<info_screen> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Si el usuario pulsa la pestaña de Información, navegamos a la ruta correspondiente
+    if (index == 1) {
+      Navigator.pushNamed(context, '/info');
+    }
+  }
 
   Future<void> _launchURL(BuildContext context, String url) async {
     final uri = Uri.parse(url);
@@ -23,14 +43,21 @@ class info_screen extends StatelessWidget {
     }
   }
 
-  final String title;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: Text('Acerca del Desarrollador'),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: const Color(0xFF9C27B0), // Color púrpura
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
@@ -90,7 +117,11 @@ class info_screen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ListTile(
-                  leading: const Icon(Icons.gamepad, color: Colors.redAccent),
+                  // Navegar a la pantalla de videojuegos
+                  onTap: () {
+                    Navigator.pushNamed(context, '/videojuegos');
+                  },
+                  leading: const Icon(Icons.videogame_asset, color: Colors.redAccent),
                   title: const Text('VideoJuegos Favoritos'),
                   subtitle: const Text(
                     'The Last of Us, God of war 3, Final Fantasy 7',
