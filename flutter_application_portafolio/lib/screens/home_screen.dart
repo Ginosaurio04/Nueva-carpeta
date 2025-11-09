@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_portafolio/routes/app_routes.dart';
+// Removed unused import to fix analyzer warning
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
@@ -22,6 +22,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (index == 1) {
       Navigator.pushNamed(context, '/info');
     }
+    if (index == 0) {
+      Navigator.pushNamed(context, '/home');
+    }
+    if (index == 2) {
+      Navigator.pushNamed(context, '/contacto');
+    }
   }
 
   @override
@@ -40,6 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contact_mail),
+            label: 'Contacto',
+          ),
         ],
       ),
       body: ListView(

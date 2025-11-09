@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+// Removed unused imports (url_launcher and tabs_screen) to fix analyzer errors
 
 class info_screen extends StatefulWidget {
   const info_screen({super.key, required this.title});
@@ -18,28 +18,13 @@ class _info_screenState extends State<info_screen> {
       _selectedIndex = index;
     });
 
-    // Si el usuario pulsa la pestaña de Información, navegamos a la ruta correspondiente
-    if (index == 1) {
+    // Navegar a la ruta según el índice seleccionado (Home=0, Info=1, Contacto=2)
+    if (index == 0) {
+      Navigator.pushNamed(context, '/home');
+    } else if (index == 1) {
       Navigator.pushNamed(context, '/info');
-    }
-  }
-
-  Future<void> _launchURL(BuildContext context, String url) async {
-    final uri = Uri.parse(url);
-    try {
-      final launched = await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication,
-      );
-      if (!launched) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No se pudo abrir la URL')),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error al abrir la URL: $e')));
+    } else if (index == 2) {
+      Navigator.pushNamed(context, '/contacto');
     }
   }
 
@@ -58,6 +43,10 @@ class _info_screenState extends State<info_screen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contact_mail),
+            label: 'Contacto',
+          ),
         ],
       ),
       body: ListView(
@@ -134,7 +123,6 @@ class _info_screenState extends State<info_screen> {
               ],
             ),
           ),
-
           const Padding(
             padding: EdgeInsets.only(left: 10, bottom: 10),
             child: Text(
@@ -144,31 +132,7 @@ class _info_screenState extends State<info_screen> {
           ),
 
           // Tarjeta con información de contacto
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              children: <Widget>[
-                // GitHub
-                ListTile(
-                  leading: const Icon(
-                    Icons.alternate_email,
-                    color: Colors.purpleAccent,
-                  ),
-                  title: const Text('GitHub'),
-                  subtitle: const Text('Ginosaurio04'),
-                  trailing: const Icon(Icons.open_in_new),
-                  onTap: () =>
-                      _launchURL(context, 'https://github.com/Ginosaurio04'),
-                ),
-              ],
-            ),
-          ),
-
           const SizedBox(height: 30),
-
           // Información Adicional
           Text(
             'Versión de la App: 1.0.0',
