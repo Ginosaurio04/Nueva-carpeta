@@ -15,8 +15,8 @@ class _TabsScreenState extends State<TabsScreen> {
 
   static final List<Widget> _pages = <Widget>[
     const HomeScreen(title: 'Home'),
-    const info_screen(title: 'Info'),
-    const contacto_screen(title: 'Contacto'),
+    const InfoScreen(title: 'Info'),
+    const ContactoScreen(title: 'Contacto'),
   ];
 
   void _onItemTapped(int index) {
@@ -32,10 +32,7 @@ class _TabsScreenState extends State<TabsScreen> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Portafolio'),
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -43,7 +40,10 @@ class _TabsScreenState extends State<TabsScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
-          BottomNavigationBarItem(icon: Icon(Icons.contact_mail), label: 'Contacto'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contact_mail),
+            label: 'Contacto',
+          ),
         ],
       ),
     );

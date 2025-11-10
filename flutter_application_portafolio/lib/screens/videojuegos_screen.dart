@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 
-class videojuegos_screen extends StatelessWidget {
-  const videojuegos_screen({super.key, required this.title});
+class VideojuegosScreen extends StatelessWidget {
+  const VideojuegosScreen({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: Text(title),
-      ),
+      appBar: AppBar(backgroundColor: Colors.deepPurple, title: Text(title)),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
           Card(
             elevation: 6,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

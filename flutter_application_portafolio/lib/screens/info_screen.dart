@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
-// Removed unused imports (url_launcher and tabs_screen) to fix analyzer errors
+import 'package:url_launcher/url_launcher.dart';
 
-class info_screen extends StatefulWidget {
-  const info_screen({super.key, required this.title});
+class InfoScreen extends StatefulWidget {
+  const InfoScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<info_screen> createState() => _info_screenState();
+  State<InfoScreen> createState() => _InfoScreenState();
 }
 
-class _info_screenState extends State<info_screen> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    // Navegar a la ruta según el índice seleccionado (Home=0, Info=1, Contacto=2)
-    if (index == 0) {
-      Navigator.pushNamed(context, '/home');
-    } else if (index == 1) {
-      Navigator.pushNamed(context, '/info');
-    } else if (index == 2) {
-      Navigator.pushNamed(context, '/contacto');
+class _InfoScreenState extends State<InfoScreen> {
+  Future<void> _launchURL(BuildContext context, String url) async {
+    final uri = Uri.parse(url);
+    try {
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No se pudo abrir la URL')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error al abrir la URL: $e')));
     }
   }
 
@@ -35,20 +37,7 @@ class _info_screenState extends State<info_screen> {
         backgroundColor: Colors.purple,
         title: Text('Acerca del Desarrollador'),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.purple,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.white, // Color blanco
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contact_mail),
-            label: 'Contacto',
-          ),
-        ],
-      ),
+
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
@@ -128,6 +117,49 @@ class _info_screenState extends State<info_screen> {
             child: Text(
               'Contacto y Portafolio',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            ),
+          ),
+
+          Card(
+            elevation: 4,
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  // Navegar a la pantalla de contacto
+                  onTap: () {
+                    Navigator.pushNamed(context, '/contacto');
+                  },
+                  leading: const Icon(
+                    Icons.contact_mail,
+                    color: Colors.blueAccent,
+                  ),
+                  title: const Text('Contacto'),
+                  subtitle: const Text('Correo electrónico y redes sociales'),
+                ),
+              ],
+            ),
+          ),
+
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              children: <Widget>[
+                // GitHub
+                ListTile(
+                  leading: const Icon(
+                    Icons.alternate_email,
+                    color: Colors.purpleAccent,
+                  ),
+                  title: const Text('GitHub'),
+                  subtitle: const Text('Ginosaurio04'),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () =>
+                      _launchURL(context, 'https://github.com/Ginosaurio04'),
+                ),
+              ],
             ),
           ),
 
